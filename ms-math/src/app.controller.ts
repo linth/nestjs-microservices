@@ -20,4 +20,10 @@ export class AppController {
   wordCountLog(text: string): void {
     console.log(text, '基于事件的传输方式');
   }
+
+  @EventPattern('two number') 
+  twoNumberInfo(data) {
+    // event pattern 是通知
+    console.log(data);    
+  }
 }
