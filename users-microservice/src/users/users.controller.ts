@@ -1,4 +1,4 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Inject, Logger } from '@nestjs/common';
 import { UsersMicroserviceService } from './users.service';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { CreateUserDto } from './dto/CreateUser.dto';
@@ -7,6 +7,8 @@ import { CreateUserDto } from './dto/CreateUser.dto';
 export class UsersMicroserviceController {
 
 	constructor(
+		@Inject('UsersLogger')
+		private readonly logger: Logger,
 		private readonly userMicroService: UsersMicroserviceService,
 	) {}
 
@@ -14,7 +16,7 @@ export class UsersMicroserviceController {
 	createUser(
 		@Payload() data: CreateUserDto
 	) {
-		console.log('data', data);
+		this.logger.debug(UsersMicroserviceController.name, data);
 		return this.userMicroService.createUser(data);
 	}
 }
